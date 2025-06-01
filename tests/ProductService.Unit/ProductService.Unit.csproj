@@ -19,7 +19,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Domain\Products\" />
+      <Folder Include="Domain\Entities\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\ProductLookupService.Domain\ProductLookupService.Domain.csproj" />
     </ItemGroup>
 
 </Project>
