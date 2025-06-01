@@ -9,11 +9,11 @@ public class ProductTests
     public void Constructor_SetsPropertiesCorrectly()
     {
         // Arrange
-        var name = new Name("Test Product");
-        var description = new Description("A test product");
+        var name = "Test Product";
+        var description = "A test product";
         var size = new Size(1.0, SizeUnit.Gram);
-        var brand = new Brand("Test Brand");
-        var barcode = new Barcode("012345678905"); // Valid UPC-A
+        var brand = "Test Brand";
+        var barcode = "012345678905"; // Valid UPC-A
 
         // Act
         var product = new Product(name, description, size, brand, barcode);
@@ -31,9 +31,9 @@ public class ProductTests
     {
         // Arrange
         Name name = null;
-        var description = new Description("A test product");
+        var description = "A test product";
         var size = new Size(1.0, SizeUnit.Gram);
-        var brand = new Brand("Test Brand");
+        var brand = "Test Brand";
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => new Product(name, description, size, brand, null));
@@ -43,10 +43,10 @@ public class ProductTests
     public void Constructor_ThrowsArgumentException_WhenDescriptionIsNull()
     {
         // Arrange
-        var name = new Name("Test Product");
+        var name = "Test Product";
         Description description = null;
         var size = new Size(1.0, SizeUnit.Gram);
-        var brand = new Brand("Test Brand");
+        var brand = "Test Brand";
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => new Product(name, description, size, brand, null));
@@ -56,10 +56,10 @@ public class ProductTests
     public void Constructor_ThrowsArgumentNullException_WhenBarcodeIsNull()
     {
         // Arrange
-        var name = new Name("Test Product");
-        var description = new Description("A test product");
+        var name = "Test Product";
+        var description = "A test product";
         var size = new Size(1.0, SizeUnit.Gram);
-        var brand = new Brand("Test Brand");
+        var brand = "Test Brand";
         Barcode barcode = null;
 
         // Act & Assert
@@ -71,22 +71,22 @@ public class ProductTests
     {
         // Arrange
         var product = new Product(
-            new Name("Test Product"),
-            new Description("A test product"),
+            "Test Product",
+            "A test product",
             new Size(1.0, SizeUnit.Gram),
-            new Brand("Test Brand"),
-            new Barcode("012345678905")
+            "Test Brand",
+            "012345678905"
         );
-        var initialFacts = new Dictionary<NutritionName, NutritionValue>
+        var initialFacts = new List<NutritionFact>
         {
-            { new NutritionName("Calories"), new NutritionValue(100) },
-            { new NutritionName("Fat"), new NutritionValue(10) }
+            new("Calories", 100),
+            new("Fat", 10)
         };
         product.AddNutritionFacts(initialFacts);
 
-        var newFacts = new Dictionary<NutritionName, NutritionValue>
+        var newFacts = new List<NutritionFact>
         {
-            { new NutritionName("Protein"), new NutritionValue(20) }
+            new("Protein", 20)
         };
 
         // Act
@@ -94,8 +94,8 @@ public class ProductTests
 
         // Assert
         Assert.Single(product.NutritionFacts);
-        Assert.True(product.NutritionFacts.ContainsKey(new NutritionName("Protein")));
-        Assert.False(product.NutritionFacts.ContainsKey(new NutritionName("Calories")));
-        Assert.False(product.NutritionFacts.ContainsKey(new NutritionName("Fat")));
+        Assert.Contains(product.NutritionFacts, nf => nf.Name == "Protein" && nf.Value == 20);
+        Assert.DoesNotContain(product.NutritionFacts, nf => nf.Name == "Calories");
+        Assert.DoesNotContain(product.NutritionFacts, nf => nf.Name == "Fat");
     }
 }

@@ -9,7 +9,9 @@ public sealed class Product : EntityId
     public Size Size { get; private set; }
     public Brand Brand { get; private set; }
     public Barcode Barcode { get; private set; }
-    public Dictionary<NutritionName, NutritionValue> NutritionFacts { get; private set; }
+    public List<NutritionFact> NutritionFacts { get; private set; }
+
+    private Product() { }
 
     public Product(
         Name name,
@@ -32,9 +34,10 @@ public sealed class Product : EntityId
         NutritionFacts = new();
     }
 
-    public void AddNutritionFacts(Dictionary<NutritionName, NutritionValue> nutritionFacts)
+    public void AddNutritionFacts(List<NutritionFact> nutritionFacts)
     {
         ArgumentNullException.ThrowIfNull(nutritionFacts);
-        NutritionFacts = new(nutritionFacts);
+        NutritionFacts.Clear();
+        NutritionFacts.AddRange(nutritionFacts);
     }
 }
