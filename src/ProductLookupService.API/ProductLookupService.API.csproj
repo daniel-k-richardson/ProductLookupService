@@ -14,4 +14,12 @@
         <ProjectReference Include="..\ProductLookupService.Persistence\ProductLookupService.Persistence.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Features\Products\CreateProduct\" />
+      <Folder Include="Features\Products\DeleteProduct\" />
+      <Folder Include="Features\Products\GetProductList\" />
+      <Folder Include="Features\Products\GetProduct\" />
+      <Folder Include="Features\Products\UpdateProduct\" />
+    </ItemGroup>
+
 </Project>
