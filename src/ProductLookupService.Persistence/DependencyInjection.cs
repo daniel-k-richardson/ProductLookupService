@@ -4,19 +4,20 @@ using ProductLookupService.Domain.Entities.Products.Interfaces;
 using ProductLookupService.Persistence.Data;
 using ProductLookupService.Persistence.Repositories;
 
-namespace ProductLookupService.Persistence;
-
-public static class DependencyInjection
+namespace ProductLookupService.Persistence
 {
-    public static void AddPersistence(this IServiceCollection services)
+    public static class DependencyInjection
     {
-        services.AddDbContext<AppDataContext>(options =>
+        public static void AddPersistence(this IServiceCollection services)
         {
-            // Place the SQLite database in the root of the persistence directory
-            var dbPath = Path.Combine(AppContext.BaseDirectory, "ProductDb.db");
-            options.UseSqlite($"Data Source={dbPath}");
-        });
+            services.AddDbContext<AppDataContext>(options =>
+            {
+                // Place the SQLite database in the root of the persistence directory
+                var dbPath = Path.Combine(AppContext.BaseDirectory, "ProductDb.db");
+                options.UseSqlite($"Data Source={dbPath}");
+            });
 
-        services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+        }
     }
 }

@@ -1,18 +1,25 @@
-namespace ProductLookupService.Domain.Entities.Products.ValueObjects;
-
-public record NutritionValue(double Value)
+namespace ProductLookupService.Domain.Entities.Products.ValueObjects
 {
-    public static implicit operator double(NutritionValue nutritionValue) => nutritionValue.Value;
-
-    public static implicit operator NutritionValue(double nutritionValue)
+    public record NutritionValue(double Value)
     {
-        if (nutritionValue < 0)
+        public static implicit operator double(NutritionValue nutritionValue)
         {
-            throw new ArgumentException("Nutrition value cannot be negative.", nameof(nutritionValue));
+            return nutritionValue.Value;
         }
 
-        return new(nutritionValue);
-    }
+        public static implicit operator NutritionValue(double nutritionValue)
+        {
+            if (nutritionValue < 0)
+            {
+                throw new ArgumentException("Nutrition value cannot be negative.", nameof(nutritionValue));
+            }
 
-    public override string ToString() => $"{Value:F2}";
+            return new NutritionValue(nutritionValue);
+        }
+
+        public override string ToString()
+        {
+            return $"{Value:F2}";
+        }
+    }
 }

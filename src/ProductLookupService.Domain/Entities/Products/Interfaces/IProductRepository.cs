@@ -1,12 +1,13 @@
-namespace ProductLookupService.Domain.Entities.Products.Interfaces;
-
-public interface IProductRepository
+namespace ProductLookupService.Domain.Entities.Products.Interfaces
 {
-    Task SaveAsync(Product product, CancellationToken cancellationToken);
+    public interface IProductRepository
+    {
+        Task SaveAsync(Product product, CancellationToken cancellationToken);
 
-    Task<Product?> GetByBarcodeAsync(string barcode, CancellationToken cancellationToken);
+        Task<Product?> GetByBarcodeAsync(string barcode, CancellationToken cancellationToken);
 
-    IEnumerable<Product> GetAll();
+        IEnumerable<Product> GetAll();
 
-    Task UpdateAsync(Product product, CancellationToken cancellationToken);
+        Task UpdateAsync(Product product, CancellationToken cancellationToken);
+    }
 }

@@ -1,15 +1,15 @@
 using ProductLookupService.Persistence;
 using ProductLookupService.Persistence.Data;
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 builder.Services.AddPersistence();
 builder.Services.AddEndpointsApiExplorer();
-var app = builder.Build();
+WebApplication app = builder.Build();
 
-using (var scope = app.Services.CreateScope())
+using (IServiceScope scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDataContext>();
     AppDataContext.CreateDatabaseIfNotExists(context);
@@ -27,7 +27,7 @@ var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm",
 
 app.MapGet("/weatherforecast", () =>
     {
-        var forecast = Enumerable.Range(1, 5).Select(index =>
+        WeatherForecast[] forecast = Enumerable.Range(1, 5).Select(index =>
                 new WeatherForecast
                 (
                     DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
@@ -42,7 +42,7 @@ app.MapGet("/weatherforecast", () =>
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+internal record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }

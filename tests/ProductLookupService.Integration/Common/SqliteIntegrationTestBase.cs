@@ -1,4 +1,3 @@
-using System;
 using Microsoft.EntityFrameworkCore;
 using ProductLookupService.Persistence.Data;
 
@@ -10,7 +9,7 @@ namespace ProductLookupService.Integration.Common
 
         protected SqliteIntegrationTestBase()
         {
-            var options = new DbContextOptionsBuilder<AppDataContext>()
+            DbContextOptions<AppDataContext> options = new DbContextOptionsBuilder<AppDataContext>()
                 .UseSqlite($"DataSource=file:memdb{Guid.NewGuid()}?mode=memory&cache=shared")
                 .Options;
             Context = new AppDataContext(options);
@@ -24,4 +23,3 @@ namespace ProductLookupService.Integration.Common
         }
     }
 }
-

@@ -9,11 +9,11 @@ public class ProductTests
     public void Constructor_SetsPropertiesCorrectly()
     {
         // Arrange
-        var name = "Test Product";
-        var description = "A test product";
+        const string name = "Test Product";
+        const string description = "A test product";
         var size = new Size(1.0, SizeUnit.Gram);
-        var brand = "Test Brand";
-        var barcode = "012345678905"; // Valid UPC-A
+        const string brand = "Test Brand";
+        const string barcode = "012345678905"; // Valid UPC-A
 
         // Act
         var product = new Product(name, description, size, brand, barcode);
@@ -31,9 +31,9 @@ public class ProductTests
     {
         // Arrange
         Name name = null;
-        var description = "A test product";
+        const string description = "A test product";
         var size = new Size(1.0, SizeUnit.Gram);
-        var brand = "Test Brand";
+        const string brand = "Test Brand";
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => new Product(name, description, size, brand, null));
@@ -43,10 +43,10 @@ public class ProductTests
     public void Constructor_ThrowsArgumentException_WhenDescriptionIsNull()
     {
         // Arrange
-        var name = "Test Product";
+        const string name = "Test Product";
         Description description = null;
         var size = new Size(1.0, SizeUnit.Gram);
-        var brand = "Test Brand";
+        const string brand = "Test Brand";
 
         // Act & Assert
         Assert.Throws<ArgumentNullException>(() => new Product(name, description, size, brand, null));
@@ -56,10 +56,10 @@ public class ProductTests
     public void Constructor_ThrowsArgumentNullException_WhenBarcodeIsNull()
     {
         // Arrange
-        var name = "Test Product";
-        var description = "A test product";
+        const string name = "Test Product";
+        const string description = "A test product";
         var size = new Size(1.0, SizeUnit.Gram);
-        var brand = "Test Brand";
+        const string brand = "Test Brand";
         Barcode barcode = null;
 
         // Act & Assert

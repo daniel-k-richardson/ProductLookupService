@@ -1,25 +1,29 @@
-namespace ProductLookupService.Domain.Entities.Products.ValueObjects;
-
-public record Size
+namespace ProductLookupService.Domain.Entities.Products.ValueObjects
 {
-    public double Value { get; }
-    public SizeUnit Unit { get; }
-
-    public Size(double value, SizeUnit unit)
+    public record Size
     {
-        if (value < 0)
-        {
-            throw new ArgumentException("Size value cannot be negative.", nameof(value));
-        }
 
-        if (!Enum.IsDefined(unit))
+        public Size(double value, SizeUnit unit)
         {
-            throw new ArgumentException("Invalid size unit.", nameof(unit));
-        }
+            if (value < 0)
+            {
+                throw new ArgumentException("Size value cannot be negative.", nameof(value));
+            }
 
-        Value = value;
-        Unit = unit;
+            if (!Enum.IsDefined(unit))
+            {
+                throw new ArgumentException("Invalid size unit.", nameof(unit));
+            }
+
+            Value = value;
+            Unit = unit;
+        }
+        public double Value { get; }
+        public SizeUnit Unit { get; }
+
+        public override string ToString()
+        {
+            return $"{Value:F2} {Unit}";
+        }
     }
-
-    public override string ToString() => $"{Value:F2} {Unit}";
 }

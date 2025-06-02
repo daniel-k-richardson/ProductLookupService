@@ -1,18 +1,25 @@
-namespace ProductLookupService.Domain.Entities.Products.ValueObjects;
-
-public record NutritionName(string Value)
+namespace ProductLookupService.Domain.Entities.Products.ValueObjects
 {
-    public static implicit operator string(NutritionName nutritionName) => nutritionName.Value;
-
-    public static implicit operator NutritionName(string nutritionName)
+    public record NutritionName(string Value)
     {
-        if (string.IsNullOrEmpty(nutritionName))
+        public static implicit operator string(NutritionName nutritionName)
         {
-            throw new ArgumentException("Nutrition name cannot be null or empty.", nameof(nutritionName));
+            return nutritionName.Value;
         }
 
-        return new(nutritionName);
-    }
+        public static implicit operator NutritionName(string nutritionName)
+        {
+            if (string.IsNullOrEmpty(nutritionName))
+            {
+                throw new ArgumentException("Nutrition name cannot be null or empty.", nameof(nutritionName));
+            }
 
-    public override string ToString() => Value;
+            return new NutritionName(nutritionName);
+        }
+
+        public override string ToString()
+        {
+            return Value;
+        }
+    }
 }

@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ProductLookupService.Persistence\ProductLookupService.Persistence.csproj" />
+        <ProjectReference Include="..\ProductLookupService.Persistence\ProductLookupService.Persistence.csproj"/>
     </ItemGroup>
 
 </Project>

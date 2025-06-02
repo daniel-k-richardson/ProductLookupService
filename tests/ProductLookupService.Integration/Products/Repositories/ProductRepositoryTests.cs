@@ -7,19 +7,19 @@ namespace ProductLookupService.Integration.Products.Repositories
 {
     public class ProductRepositoryTests : SqliteIntegrationTestBase
     {
-        private readonly ProductRepository _repository;
+        private readonly ProductRepository _productRepository;
 
         public ProductRepositoryTests()
         {
-            _repository = new ProductRepository(Context);
+            _productRepository = new ProductRepository(Context);
         }
 
         [Fact]
         public async Task SaveAsync_ShouldAddProduct()
         {
-            var product = CreateProduct("123456789012");
-            await _repository.SaveAsync(product);
-            var found = await _repository.GetByBarcodeAsync(product.Barcode);
+            Product product = CreateProduct("123456789012");
+            await _productRepository.SaveAsync(product);
+            Product? found = await _productRepository.GetByBarcodeAsync(product.Barcode);
             Assert.NotNull(found);
             Assert.Equal(product.Barcode, found.Barcode);
         }
@@ -27,14 +27,14 @@ namespace ProductLookupService.Integration.Products.Repositories
         [Fact]
         public async Task UpdateAsync_ShouldUpdateProduct()
         {
-            var product = CreateProduct("123456789012");
-            await _repository.SaveAsync(product);
-            var found = await _repository.GetByBarcodeAsync(product.Barcode);
+            Product product = CreateProduct("123456789012");
+            await _productRepository.SaveAsync(product);
+            Product? found = await _productRepository.GetByBarcodeAsync(product.Barcode);
 
-            found?.AddNutritionFacts(new List<NutritionFact>());
-            await _repository.UpdateAsync(found);
+            found?.AddNutritionFacts([]);
+            await _productRepository.UpdateAsync(found!);
 
-            var updated = await _repository.GetByBarcodeAsync(product.Barcode);
+            Product? updated = await _productRepository.GetByBarcodeAsync(product.Barcode);
             Assert.NotNull(updated);
             Assert.Empty(updated.NutritionFacts);
         }
@@ -42,11 +42,11 @@ namespace ProductLookupService.Integration.Products.Repositories
         [Fact]
         public async Task GetAll_ShouldReturnAllProducts()
         {
-            var product1 = CreateProduct("036000291452"); // valid UPC-A
-            var product2 = CreateProduct("012345678905"); // valid UPC-A
-            await _repository.SaveAsync(product1);
-            await _repository.SaveAsync(product2);
-            var all = _repository.GetAll();
+            Product product1 = CreateProduct("036000291452"); // valid UPC-A
+            Product product2 = CreateProduct("012345678905"); // valid UPC-A
+            await _productRepository.SaveAsync(product1);
+            await _productRepository.SaveAsync(product2);
+            List<Product> all = _productRepository.GetAll().ToList();
             Assert.Contains(all, p => p.Barcode == product1.Barcode);
             Assert.Contains(all, p => p.Barcode == product2.Barcode);
         }
@@ -54,11 +54,10 @@ namespace ProductLookupService.Integration.Products.Repositories
         private static Product CreateProduct(string barcode)
         {
             return new Product(
-                new Name("Test Product"),
-                new Description("Test Description"),
+                "Test Product",
+                "Test Description",
                 new Size(1, SizeUnit.Gram),
-                new Brand("Test Brand"),
-                new Barcode(barcode)
+                "Test Brand",barcode
             );
         }
     }

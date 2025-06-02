@@ -1,24 +1,27 @@
 using ProductLookupService.Domain.Entities.Products.ValueObjects;
 
-namespace ProductService.Unit.Domain.Entities.Products.ValueObjects;
-
-public class DescriptionTests
+namespace ProductService.Unit.Domain.Entities.Products.ValueObjects
 {
-    [Theory]
-    [InlineData(null)]
-    [InlineData("")]
-    public void ImplicitOperator_ThrowsArgumentException_WhenNullOrEmpty(string input)
+    public class DescriptionTests
     {
-        var ex = Assert.Throws<ArgumentException>(() => { Description desc = input; });
-        Assert.Equal("Description cannot be null or empty. (Parameter 'description')", ex.Message);
-    }
+        [Theory]
+        [InlineData(null)]
+        [InlineData("")]
+        public void ImplicitOperator_ThrowsArgumentException_WhenNullOrEmpty(string input)
+        {
+            var ex = Assert.Throws<ArgumentException>(() =>
+            {
+                Description desc = input;
+            });
+            Assert.Equal("Description cannot be null or empty. (Parameter 'description')", ex.Message);
+        }
 
-    [Fact]
-    public void ImplicitOperator_CreatesDescription_WhenValid()
-    {
-        string input = "Valid Description";
-        Description desc = input;
-        Assert.Equal(input, desc.Value);
+        [Fact]
+        public void ImplicitOperator_CreatesDescription_WhenValid()
+        {
+            var input = "Valid Description";
+            Description desc = input;
+            Assert.Equal(input, desc.Value);
+        }
     }
 }
-

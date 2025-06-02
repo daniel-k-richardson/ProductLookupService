@@ -1,9 +1,10 @@
-namespace ProductLookupService.Domain.Entities.Products.ValueObjects;
-
-public enum SizeUnit
+namespace ProductLookupService.Domain.Entities.Products.ValueObjects
 {
-    Gram,
-    Kilogram,
-    Milliliter,
-    Liter
+    public enum SizeUnit
+    {
+        Gram,
+        Kilogram,
+        Milliliter,
+        Liter
+    }
 }

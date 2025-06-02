@@ -1,22 +1,23 @@
 using Microsoft.EntityFrameworkCore;
 using ProductLookupService.Domain.Entities.Products;
 
-namespace ProductLookupService.Persistence.Data;
-
-public class AppDataContext(DbContextOptions<AppDataContext> options) : DbContext(options)
+namespace ProductLookupService.Persistence.Data
 {
-    public DbSet<Product> Products { get; set; } = null!;
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    public class AppDataContext(DbContextOptions<AppDataContext> options) : DbContext(options)
     {
-        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDataContext).Assembly);
-    }
+        public DbSet<Product> Products { get; set; } = null!;
 
-    public static void CreateDatabaseIfNotExists(AppDataContext context)
-    {
-        if (context.Database.EnsureCreated())
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Database was created, you can seed initial data here if needed
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDataContext).Assembly);
+        }
+
+        public static void CreateDatabaseIfNotExists(AppDataContext context)
+        {
+            if (context.Database.EnsureCreated())
+            {
+                // Database was created, you can seed initial data here if needed
+            }
         }
     }
 }

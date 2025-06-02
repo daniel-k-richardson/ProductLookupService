@@ -1,16 +1,20 @@
-namespace ProductLookupService.Domain.Entities.Products.ValueObjects;
-
-public record Brand(string Value)
+namespace ProductLookupService.Domain.Entities.Products.ValueObjects
 {
-    public static implicit operator string(Brand brand) => brand.Value;
-
-    public static implicit operator Brand(string brand)
+    public record Brand(string Value)
     {
-        if (string.IsNullOrEmpty(brand))
+        public static implicit operator string(Brand brand)
         {
-            throw new ArgumentException("Brand cannot be null or empty.", nameof(brand));
+            return brand.Value;
         }
 
-        return new(brand);
+        public static implicit operator Brand(string brand)
+        {
+            if (string.IsNullOrEmpty(brand))
+            {
+                throw new ArgumentException("Brand cannot be null or empty.", nameof(brand));
+            }
+
+            return new Brand(brand);
+        }
     }
 }

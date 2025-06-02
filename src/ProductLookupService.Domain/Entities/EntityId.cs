@@ -1,24 +1,37 @@
-namespace ProductLookupService.Domain.Entities;
-
-public class EntityId : IEquatable<EntityId>
+namespace ProductLookupService.Domain.Entities
 {
-   public Guid Id { get; }
-
-    protected EntityId()
+    public class EntityId : IEquatable<EntityId>
     {
-        Id = Guid.NewGuid();
+
+        protected EntityId()
+        {
+            Id = Guid.NewGuid();
+        }
+        public Guid Id { get; }
+
+        public bool Equals(EntityId? other)
+        {
+            return other is not null && Id.Equals(other.Id);
+        }
+
+        public static implicit operator Guid(EntityId entityId)
+        {
+            return entityId.Id;
+        }
+
+        public override string ToString()
+        {
+            return Id.ToString();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return Equals(obj as EntityId);
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
     }
-
-    public static implicit operator Guid(EntityId entityId) => entityId.Id;
-
-    public override string ToString() => Id.ToString();
-
-    public bool Equals(EntityId? other)
-    {
-        return other is not null && Id.Equals(other.Id);
-    }
-
-    public override bool Equals(object? obj) => Equals(obj as EntityId);
-
-    public override int GetHashCode() => Id.GetHashCode();
 }

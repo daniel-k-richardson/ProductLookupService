@@ -1,19 +1,25 @@
-namespace ProductLookupService.Domain.Entities.Products.ValueObjects;
-
-public record Name(string Value)
+namespace ProductLookupService.Domain.Entities.Products.ValueObjects
 {
-    public static implicit operator string(Name name) => name.Value;
-
-    public static implicit operator Name(string name)
+    public record Name(string Value)
     {
-        if (string.IsNullOrEmpty(name))
+        public static implicit operator string(Name name)
         {
-            throw new ArgumentException("Name cannot be null or empty.", nameof(name));
+            return name.Value;
         }
 
-        return new(name);
+        public static implicit operator Name(string name)
+        {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Name cannot be null or empty.", nameof(name));
+            }
+
+            return new Name(name);
+        }
+
+        public override string ToString()
+        {
+            return Value;
+        }
     }
-
-    public override string ToString() => Value;
 }
-
